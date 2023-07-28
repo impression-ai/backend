@@ -1,4 +1,4 @@
-name: wef server CI/CD
+name: judgebot server CI/CD
 
 on:
   push:
