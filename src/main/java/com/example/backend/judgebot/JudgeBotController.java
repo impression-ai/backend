@@ -2,6 +2,7 @@ package com.example.backend.judgebot;
 
 import com.amazonaws.services.rekognition.model.Face;
 import com.amazonaws.services.rekognition.model.FaceDetail;
+import com.example.backend.util.JudgeBotService;
 import com.example.backend.util.OpenAiService;
 import com.example.backend.util.RekognitionService;
 import com.example.backend.util.S3Service;
@@ -9,7 +10,9 @@ import com.example.backend.judgebot.dto.ImageRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,6 +23,7 @@ public class JudgeBotController {
     private final S3Service s3Service;
     private final RekognitionService rekognitionService;
     private final OpenAiService openAiService;
+    private final JudgeBotService judgeBotService;
 
     @PostMapping("/images")
     public ResponseEntity<?> uploadImage(ImageRequestDto imageRequestDto) throws Exception {
@@ -28,7 +32,14 @@ public class JudgeBotController {
 
         List<FaceDetail> faceDetails = rekognitionService.sendImageToRekognition(fileName);
         System.out.println(faceDetails.toString() + "\n 이 데이터를 가지고 첫인상에 대한 글을 한글로 작성해줘 ");
+        String content = openAiService.sendToOpenAi(faceDetails.toString());
 
-        return new ResponseEntity<>(openAiService.sendToOpenAi(faceDetails.toString()) + "\n 이 데이터를 가지고 첫인상에 대한 글을 한글로 작성해줘 ", HttpStatus.OK);
+        // 적절한 상태 코드와 함께 ResponseEntity 반환
+        return new ResponseEntity<>("JudgeBot inserted: " +  judgeBotService.insertJudgeBot(content, fileName), HttpStatus.OK);
+    }
+
+    @GetMapping("/results")
+    public ResponseEntity<?> getJudgeBot(@RequestParam(value="resultId") Long id){
+        return judgeBotService.getJudgeBot(id);
     }
 }

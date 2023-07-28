@@ -1,14 +1,13 @@
 package com.example.backend.util;
 
-import com.amazonaws.services.rekognition.model.FaceDetail;
+import com.example.backend.judgebot.JudgeBot;
+import com.example.backend.judgebot.JudgeBotRepository;
 import com.example.backend.judgebot.dto.ChatRequestDto;
 import com.example.backend.judgebot.dto.ChatResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class OpenAiService {
     @Value("${openai.api.url}")
     private String apiUrl;
 
-    public Object sendToOpenAi(String prompt) {
+    public String sendToOpenAi(String prompt) {
 
         ChatRequestDto requestDto = new ChatRequestDto(model, prompt);
 
@@ -33,6 +32,7 @@ public class OpenAiService {
         }
 
         System.out.println(responseDto.getUsage().getTotal_tokens());
+
 
         return responseDto.getChoices().get(0).getMessage().getContent();
     }
