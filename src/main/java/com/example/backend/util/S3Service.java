@@ -1,4 +1,4 @@
-package com.example.backend.s3;
+package com.example.backend.util;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

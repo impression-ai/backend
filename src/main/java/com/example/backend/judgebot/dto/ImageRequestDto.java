@@ -1,4 +1,4 @@
-package com.example.backend.s3.dto;
+package com.example.backend.judgebot.dto;
 
 
 import lombok.AllArgsConstructor;

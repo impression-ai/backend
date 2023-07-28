@@ -32,7 +32,8 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	implementation 'com.amazonaws:aws-java-sdk:1.11.256'
+	implementation 'com.amazonaws:aws-java-sdk-rekognition:1.11.256'
 }
 
 tasks.named('test') {
