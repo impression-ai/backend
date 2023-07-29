@@ -27,12 +27,12 @@ public class JudgeBotService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<?> getJudgeBot(Long id, boolean user) {
+    public ResponseEntity<?> getJudgeBot(Long id, boolean isShared) {
 
         JudgeBot judgeBot = judgeBotRepository.findById(id).orElseThrow(() ->
                 new NullPointerException("해당 데이터를 찾을 수 없습니다."));
 
-        JudgeBotResponseDto judgeBotResponseDto = new JudgeBotResponseDto(judgeBot, user);
+        JudgeBotResponseDto judgeBotResponseDto = new JudgeBotResponseDto(judgeBot, isShared);
         return new ResponseEntity<>(judgeBotResponseDto, HttpStatus.OK);
     }
 }

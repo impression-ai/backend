@@ -33,9 +33,9 @@ public class JudgeBotController {
         return judgeBotService.insertJudgeBot(content, fileName);
     }
 
-    @GetMapping("/results/{id}/{user}")
-    public ResponseEntity<?> getJudgeBot(@PathVariable("id") Long id, @PathVariable("user") boolean user){
+    @GetMapping("/results/{resultId}/{isShared}")
+    public ResponseEntity<?> getJudgeBot(@PathVariable("resultId") Long id, @PathVariable("isShared") boolean isShared){
 
-        return judgeBotService.getJudgeBot(id, user);
+        return judgeBotService.getJudgeBot(id, isShared);
     }
 }

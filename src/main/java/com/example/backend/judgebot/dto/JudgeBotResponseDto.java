@@ -14,10 +14,10 @@ public class JudgeBotResponseDto {
     private String content;
     private boolean user;
 
-    public JudgeBotResponseDto(JudgeBot judgeBot, boolean user){
+    public JudgeBotResponseDto(JudgeBot judgeBot, boolean isShared){
         this.id = judgeBot.getId();
         this.fileName = judgeBot.getImage();
         this.content = judgeBot.getContent();
-        this.user = user;
+        this.user = isShared;
     }
 }
