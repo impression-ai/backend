@@ -1,4 +1,4 @@
-package com.example.backend.util;
+package com.example.backend.judgebot;
 
 import com.example.backend.judgebot.JudgeBot;
 import com.example.backend.judgebot.JudgeBotRepository;
@@ -18,7 +18,7 @@ public class JudgeBotService {
     public ResponseEntity<?> insertJudgeBot(String content, String fileName) {
         JudgeBot judgeBot = JudgeBot.builder()
                 .content(content)
-                .fileName("https://aws-reko-bucket.s3.ap-northeast-2.amazonaws.com/" + fileName)
+                .image("https://aws-reko-bucket.s3.ap-northeast-2.amazonaws.com/" + fileName)
                 .build();
 
         judgeBotRepository.save(judgeBot);
@@ -27,12 +27,12 @@ public class JudgeBotService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<?> getJudgeBot(Long id) {
+    public ResponseEntity<?> getJudgeBot(Long id, boolean user) {
 
         JudgeBot judgeBot = judgeBotRepository.findById(id).orElseThrow(() ->
                 new NullPointerException("해당 데이터를 찾을 수 없습니다."));
 
-        JudgeBotResponseDto judgeBotResponseDto = new JudgeBotResponseDto(judgeBot);
+        JudgeBotResponseDto judgeBotResponseDto = new JudgeBotResponseDto(judgeBot, user);
         return new ResponseEntity<>(judgeBotResponseDto, HttpStatus.OK);
     }
 }

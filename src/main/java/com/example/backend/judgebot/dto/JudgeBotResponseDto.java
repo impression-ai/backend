@@ -12,12 +12,12 @@ public class JudgeBotResponseDto {
     private Long id;
     private String fileName;
     private String content;
-    private boolean isShareLink;
+    private boolean user;
 
-    public JudgeBotResponseDto(JudgeBot judgeBot){
+    public JudgeBotResponseDto(JudgeBot judgeBot, boolean user){
         this.id = judgeBot.getId();
-        this.fileName = judgeBot.getFileName();
+        this.fileName = judgeBot.getImage();
         this.content = judgeBot.getContent();
-        this.isShareLink = judgeBot.isShareLink();
+        this.user = user;
     }
 }

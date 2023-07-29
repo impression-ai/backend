@@ -1,8 +1,6 @@
 package com.example.backend.judgebot;
 import javax.persistence.*;
 
-import com.example.backend.judgebot.dto.ChatResponseDto;
-import com.example.backend.judgebot.dto.IsShareRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,15 +18,10 @@ public class JudgeBot {
     private Long id;
 
     @Column(length = 500)
-    private String fileName;
+    private String image;
 
     @Column(length = 50000)
     private String content;
-
-    @Column
-    private boolean isShareLink;
-
-    public void updateShare(IsShareRequestDto isShareRequestDto){this.isShareLink= isShareRequestDto.isShareLink();}
 
 
 }

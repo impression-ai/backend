@@ -1,8 +1,6 @@
 package com.example.backend.judgebot;
 
-import com.amazonaws.services.rekognition.model.Face;
 import com.amazonaws.services.rekognition.model.FaceDetail;
-import com.example.backend.util.JudgeBotService;
 import com.example.backend.util.OpenAiService;
 import com.example.backend.util.RekognitionService;
 import com.example.backend.util.S3Service;
@@ -10,10 +8,7 @@ import com.example.backend.judgebot.dto.ImageRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,11 +30,12 @@ public class JudgeBotController {
         String content = openAiService.sendToOpenAi(faceDetails.toString());
 
         // 적절한 상태 코드와 함께 ResponseEntity 반환
-        return new ResponseEntity<>("JudgeBot inserted: " +  judgeBotService.insertJudgeBot(content, fileName), HttpStatus.OK);
+        return judgeBotService.insertJudgeBot(content, fileName);
     }
 
-    @GetMapping("/results")
-    public ResponseEntity<?> getJudgeBot(@RequestParam(value="resultId") Long id){
-        return judgeBotService.getJudgeBot(id);
+    @GetMapping("/results/{id}/{user}")
+    public ResponseEntity<?> getJudgeBot(@PathVariable("id") Long id, @PathVariable("user") boolean user){
+
+        return judgeBotService.getJudgeBot(id, user);
     }
 }
