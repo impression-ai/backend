@@ -10,14 +10,14 @@ import javax.persistence.Column;
 @NoArgsConstructor
 public class JudgeBotResponseDto {
     private Long id;
-    private String fileName;
+    private String image;
     private String content;
-    private boolean user;
+    private boolean isShared;
 
     public JudgeBotResponseDto(JudgeBot judgeBot, boolean isShared){
         this.id = judgeBot.getId();
-        this.fileName = judgeBot.getImage();
+        this.image = judgeBot.getImage();
         this.content = judgeBot.getContent();
-        this.user = isShared;
+        this.isShared = isShared;
     }
 }
